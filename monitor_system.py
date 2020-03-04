@@ -3,42 +3,50 @@ import time
 from os import system
 import platform
 from datetime import datetime
-def  menu():
-	print("="*40, "System Monitoring", "="*40)
-	print("1. CPU and System load")
-	print("2. Memoy usage")
-	print("3. Disk Usage")
-	print("4. Network latency")
-	print("0. exit")
 
-menu()
+def get_size(bytes, suffix="B"):
+    """
+    Scale bytes to its proper format
+    e.g:
+        1253656 => '1.20MB'
+        1253656678 => '1.17GB'
+    """
+    factor = 1024
+    for unit in ["", "K", "M", "G", "T", "P"]:
+        if bytes < factor:
+            return f"{bytes:.2f}{unit}{suffix}"
+        bytes /= factor
 
-def cpu_monitor():
+
+def cpu_Monitor():
 	print("="*40, "CPU Monitoring", "="*40)
-	while(1):
-		print("CPU Usage Per Core:")
-		for i, percentage in enumerate(psutil.cpu_percent(percpu=True)):
-			print(f"Core {i}: {percentage}%")
+	print("CPU Usage Per Core:")
+	for i, percentage in enumerate(psutil.cpu_percent(percpu=True)):
+		print(f"Core {i}: {percentage}%")
 		print(f"Total CPU Usage: {psutil.cpu_percent()}%")
-		time.sleep(2.4)
-		system('clear')
+	
+def memory_Monitor():
+	print("="*40, "Memory Information", "="*40)
+	# get the memory details
+	svmem = psutil.virtual_memory()
+	print(f"Total: {get_size(svmem.total)}")
+	print(f"Available: {get_size(svmem.available)}")
+	print(f"Used: {get_size(svmem.used)}")
+	print(f"Percentage: {svmem.percent}%")
 
-def memory_monitor():
-	print("for RAM")
+def disk_Monitor():
+	# Disk Information
+	print("="*40, "Disk Information -root (/) ", "="*40)
+	partition_usage = psutil.disk_usage("/")
+	print(f"  Total Size: {get_size(partition_usage.total)}")
+	print(f"  Used: {get_size(partition_usage.used)}")
+	print(f"  Free: {get_size(partition_usage.free)}")
+	print(f"  Percentage: {partition_usage.percent}%")
 
 
-
-
-def SwitchExample(argument):  # as python do not have swithch case I have use the dictionary
-    switcher = {
-        1: cpu_monitor(),
-        2: memory_monitor(),
-        3: " This is Case 3 ",
-        4: " This is Case 4 ",
-        0:   exit()
-               }
-    return switcher.get(argument, "nothing")
-
-x = input("Enter your choice:")
-print(SwitchExample(int(x)))
-
+while(1):
+	cpu_Monitor()
+	memory_Monitor()
+	disk_Monitor()
+	time.sleep(2.4)
+	system('clear')
