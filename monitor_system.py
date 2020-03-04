@@ -1,5 +1,7 @@
 import psutil
 import time
+import subprocess
+
 from os import system
 import platform
 from datetime import datetime
@@ -43,10 +45,22 @@ def disk_Monitor():
 	print(f"  Free: {get_size(partition_usage.free)}")
 	print(f"  Percentage: {partition_usage.percent}%")
 
+def network_Monitor(url):
+	print("="*40, "Network Latency for :"+ url + "="*40 )
+	
+	network_lags= subprocess.getoutput('ping ' + url + ' -i 1  -c 5 | tail -1| cut -d"=" -f2').split('/')
+	# i= interval  c= count  first tail -1 last line , cut= last output. cut
+	print(f"Min={network_lags[0]} ms")
+	print(f"Avg={network_lags[1]} ms")
+	print(f"Max={network_lags[2]} ms")
 
-while(1):
-	cpu_Monitor()
-	memory_Monitor()
-	disk_Monitor()
-	time.sleep(2.4)
-	system('clear')
+
+
+
+#while(1):
+cpu_Monitor()
+memory_Monitor()
+disk_Monitor()
+network_Monitor('talentica-all.com')
+#	time.sleep(2.4)
+#	system('clear')
