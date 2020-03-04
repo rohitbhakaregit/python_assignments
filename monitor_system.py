@@ -77,5 +77,4 @@ while(1):
 	disk_Monitor()
 	network_Monitor('talentica-all.com')
 	
-	#slack_integration.post_message_to_slack("CPU reached maximum threashold Rohit_test")
 	
