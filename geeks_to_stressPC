@@ -1,0 +1,4 @@
+utilize all the cpu   yes > /dev/null    killall yes
+utilize all the ram 
+
+echo {1..1000000000}

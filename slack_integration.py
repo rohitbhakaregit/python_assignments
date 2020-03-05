@@ -3,7 +3,7 @@ import json
 
 def post_message_to_slack(text,uname,image_url,blocks = None): 
     return requests.post('https://slack.com/api/chat.postMessage', {
-        'token': "xoxp-979368346404-968354493955-980955372132-343303a034502c9c9390c147d10dae75",
+        'token': "xoxp-979368346404-968354493955-983139912916-9db2ea28edd23e7e83d9d33910fa7e4a",
         'channel': "#mesh",
         'text': text,
         'icon_url': image_url,
