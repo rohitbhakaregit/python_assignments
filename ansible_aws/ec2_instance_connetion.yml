@@ -1,0 +1,25 @@
+---
+- name: test the script 
+  hosts: aws
+  become: true
+  tasks:
+    - name: installing required pakages 
+      apt:
+        update_cache: yes
+        name: ['python3', 'python3-pip']
+        state: present
+    - name: installing pip modules
+      pip:
+        name: ['psutil', 'requests']
+    - name: deplying code from git 
+      git:
+        repo: 'https://github.com/rohitbhakaregit/python_assignments'
+        dest: /home/ubuntu/python_code
+        clone: yes
+        update: yes
+        force: yes
+    - name: running python sctipt in background
+      script: /home/ubuntu/python_code/silent_monitor.py
+      args:
+        executable: python3
+      

@@ -1,0 +1,15 @@
+---
+- name: test the script 
+  hosts: local
+  tasks:
+    - name: fetching instance information
+      ec2_instance_info:
+        region: us-east-1
+        validate_certs: no
+        instance_ids:
+          i-01833688fe4af12a7
+      register: result
+    - debug:
+       msg:
+        - "Hi I am Rohit {{ result }} "
+           
