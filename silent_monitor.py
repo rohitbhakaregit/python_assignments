@@ -27,7 +27,7 @@ def memory_Monitor():
 def disk_Monitor():
 	# Disk Information
 	partition_usage = psutil.disk_usage("/")
-	if partition_usage.percent > 10:
+	if partition_usage.percent > 90:
 		slack_integration.post_message_to_slack("Disk reached maximum threashold ","Disk_ALERT","https://cdn1.iconfinder.com/data/icons/storage-data-6/24/storage_drive_disk_compact_alert_1-512.png")
 
 def network_Monitor(url):
